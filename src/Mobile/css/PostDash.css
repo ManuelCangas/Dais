@@ -1,0 +1,15 @@
+.scroll-container {
+  overflow-x: auto;
+}
+.card-post {
+  width: 32em;
+}
+.description {
+  overflow: hidden;
+  white-space: normal;
+  text-overflow: ellipsis;
+  max-height: 70px;
+}
+.button {
+  width: 15px;
+}
