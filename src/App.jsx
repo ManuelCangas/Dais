@@ -4,6 +4,7 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
+import { AuthProvider } from "./auth/AuthContext"; // Auth con createContext
 import Home from "./Home/Pages/Home";
 import Landing from "./Home/Landing";
 import Contacto from "./Home/Pages/Contacto";
@@ -26,7 +27,7 @@ import EditProfile from "./Mobile/pages/EditProfile";
 
 function App() {
   return (
-    <>
+    <AuthProvider>
       <BrowserRouter>
         <Routes>
           <Route element={<Landing />}>
@@ -56,7 +57,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </>
+    </AuthProvider>
   );
 }
 

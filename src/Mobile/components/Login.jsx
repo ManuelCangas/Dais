@@ -3,12 +3,14 @@ import React from "react";
 import axios from "axios";
 import DadoImage from "../css/dado.png";
 import "../css/Login.css";
+import { useAuth } from "../../auth/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 
 const LoginUsuario = () => {
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
 
+  const { login } = useAuth();
   const navigateTo = useNavigate();
 
   const handleLogin = async (event) => {
@@ -21,15 +23,22 @@ const LoginUsuario = () => {
           password: password,
         }
       );
-      if (response.status === 200) {
-        console.log("Inicio de sesión exitoso");
+      // Si el inicio de sesión es exitoso
+      if (response.data && response.data.token) {
+        const token = response.data.token;
+        console.log("Inicio de sesión exitoso, Token:", token);
+        login(token); // Almacena el token en el contexto
         navigateTo("/app/feed");
+        alert("Ingresado correctamente");
       } else {
-        console.log("Error en el servidor");
+        console.log("La respuesta del servidor no contiene un token.");
       }
-      alert("Ingresado correctamente");
     } catch (error) {
-      console.error(error);
+      console.error("Error durante el inicio de sesión:", error.message);
+      alert("Error durante el inicio de sesión. Verifica tus credenciales.");
+    } finally {
+      setNickname("");
+      setPassword("");
     }
   };
 

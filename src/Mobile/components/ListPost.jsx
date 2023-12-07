@@ -2,19 +2,28 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "../css/PostDash.css";
+import { useAuth } from "../../auth/AuthContext";
 
 const URI = "http://localhost:8000/post/";
 
 const ListPost = () => {
-  //Get
   const [posts, setPosts] = useState([]);
+  const { token } = useAuth();
+
   useEffect(() => {
     getPost();
-  }, []);
+  }, [token]);
   //Listar
   const getPost = async () => {
     try {
-      const res = await axios.get(URI);
+      //const token = /* Obtén el token del usuario */;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const res = await axios.get(URI, null, config);
       setPosts(res.data);
     } catch (error) {
       console.error("Error fetching posts:", error.message);
