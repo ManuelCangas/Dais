@@ -1,7 +1,7 @@
 import React from "react";
 import FormProfile from "../components/FormProfile";
 
-function FormProfile() {
+function EditProfile() {
   return (
     <div>
       <FormProfile />
@@ -9,4 +9,4 @@ function FormProfile() {
   );
 }
 
-export default FormProfile;
+export default EditProfile;

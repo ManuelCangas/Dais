@@ -27,6 +27,7 @@ const LoginUsuario = () => {
       } else {
         console.log("Error en el servidor");
       }
+      alert("Ingresado correctamente");
     } catch (error) {
       console.error(error);
     }
@@ -52,7 +53,7 @@ const LoginUsuario = () => {
 
             <div className='form-outline mb-4'>
               <input
-                className='form-control card-input'
+                className='form-control'
                 type='text'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -68,6 +69,11 @@ const LoginUsuario = () => {
               className='btn btn-outline-success btn-block'
               onClick={handleLogin}
               to='/app/feed'>
+              Log in
+            </Link>
+            <Link
+              className='btn btn-outline-success btn-block ms-3'
+              to='/app/register'>
               Sign in
             </Link>
           </form>

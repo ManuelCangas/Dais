@@ -17,6 +17,7 @@ import ListarPost from "./Admin/pages/ListarPost";
 import FormTag from "./Admin/pages/Tags";
 import Platform from "./mobile/Platform";
 import LoginUsuario from "./Mobile/pages/Login";
+import RegisterUser from "./Mobile/pages/RegisterUser";
 import FeedUsuario from "./Mobile/pages/Feed";
 import ViewPost from "./Mobile/pages/ViewPost";
 import FormPost from "./Mobile/pages/FormPost";
@@ -45,6 +46,7 @@ function App() {
           </Route>
           <Route path='/app' element={<Platform />}>
             <Route path='/app/login' element={<LoginUsuario />} />
+            <Route path='/app/register' element={<RegisterUser />} />
             <Route path='/app/feed' element={<FeedUsuario />} />
             <Route path='/app/profile' element={<Profile />} />
             <Route path='/app/form/profile' element={<EditProfile />} />
