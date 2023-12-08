@@ -1,17 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React from "react";
 import axios from "axios";
 import DadoImage from "../css/dado.png";
 import "../css/Login.css";
 import { useAuth } from "../../auth/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const LoginUsuario = () => {
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login } = useAuth();
+  const { login, token } = useAuth();
   const navigateTo = useNavigate();
+
+  useEffect(() => {
+    // Verifica si ya hay un token
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      if (decodedToken.exp * 1000 > Date.now()) {
+        navigateTo("/app/feed"); // Redirige directamente a Feed
+      }
+    }
+  }, [token, navigateTo]);
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -23,11 +34,10 @@ const LoginUsuario = () => {
           password: password,
         }
       );
-      // Si el inicio de sesión es exitoso
       if (response.data && response.data.token) {
         const token = response.data.token;
         console.log("Inicio de sesión exitoso, Token:", token);
-        login(token); // Almacena el token en el contexto
+        login(token);
         navigateTo("/app/feed");
         alert("Ingresado correctamente");
       } else {

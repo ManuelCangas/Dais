@@ -21,6 +21,7 @@ import LoginUsuario from "./Mobile/pages/Login";
 import RegisterUser from "./Mobile/pages/RegisterUser";
 import FeedUsuario from "./Mobile/pages/Feed";
 import ViewPost from "./Mobile/pages/ViewPost";
+import Participants from "./Mobile/components/Participants";
 import FormPost from "./Mobile/pages/FormPost";
 import Profile from "./Mobile/pages/Profile";
 import EditProfile from "./Mobile/pages/EditProfile";
@@ -53,6 +54,10 @@ function App() {
             <Route path='/app/form/profile' element={<EditProfile />} />
             <Route path='/app/form/post/:id' element={<FormPost />} />
             <Route path='/app/view/post/:id' element={<ViewPost />} />
+            <Route
+              path='/app/view/post/participants'
+              element={<Participants />}
+            />
             <Route path='*' element={<Navigate to='/app' replace />} />
           </Route>
         </Routes>

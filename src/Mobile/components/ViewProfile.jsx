@@ -1,14 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../auth/AuthContext";
 
 const ViewProfile = () => {
-  // Pedir datos
+  const { logout } = useAuth();
+  const navigateTo = useNavigate();
   // Simulación de datos de usuario (puedes reemplazarlo con datos reales)
   const userData = {
     nickname: "Dado",
     name: "El Dado",
     email: "dado.dado@hotmail.com",
     // ... otros datos del usuario
+  };
+
+  const handleLogout = () => {
+    logout(); // Elimina el token al cerrar sesión
+    navigateTo("/app/login"); // Redirige al usuario al inicio de sesión
   };
 
   return (
@@ -31,9 +38,10 @@ const ViewProfile = () => {
               to='/app/edit/profile'>
               Editar Perfil
             </Link>
-            <button className='btn btn-outline-danger'>Cerrar Sesión</button>
+            <button className='btn btn-outline-danger' onClick={handleLogout}>
+              Cerrar Sesión
+            </button>
           </div>
-          <div></div>
         </div>
       </div>
     </div>

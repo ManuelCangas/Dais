@@ -3,38 +3,54 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "../css/PostDash.css";
 import { useAuth } from "../../auth/AuthContext";
+import { jwtDecode } from "jwt-decode";
 
-const URI = "http://localhost:8000/post/";
+const URI = "http://localhost:8000/post";
 
 const ListPost = () => {
   const [posts, setPosts] = useState([]);
-  const { token } = useAuth();
+  const { token, login } = useAuth();
+
+  const decodedToken = token ? jwtDecode(token) : null;
+  const userId = decodedToken ? decodedToken.userId : null;
 
   useEffect(() => {
-    getPost();
-  }, [token]);
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      login(storedToken); // Si hay un token en localStorage, actualiza el estado con ese token
+    }
+    getPost(); // Realiza la lógica para obtener publicaciones
+  }, [login, token, userId]); // [] como segundo argumento significa que se ejecuta solo en el montaje inicial
+
   //Listar
   const getPost = async () => {
     try {
-      //const token = /* Obtén el token del usuario */;
+      if (!token || !userId) {
+        console.error("Token o Id de usuario no presente");
+        return;
+      }
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       };
-
-      const res = await axios.get(URI, null, config);
-      setPosts(res.data);
+      const res = await axios.post(`${URI}/userposts`, null, config);
+      console.log("Respuesta de API:", res.data);
+      setPosts(res.data || []);
     } catch (error) {
-      console.error("Error fetching posts:", error.message);
+      console.error("Error al hacer fetching en post:", error);
     }
   };
   //Delete
   const deletePost = async (id) => {
-    await axios.delete(`${URI}${id}`);
-    getPost().then(() => {
+    try {
+      await axios.delete(`${URI}/${id}`);
+      getPost();
       alert("Publicación eliminada");
-    });
+    } catch (error) {
+      console.error("Error deleting post:", error.message);
+      alert("Error al eliminar la publicación");
+    }
   };
   //HTML
   return (
@@ -86,6 +102,11 @@ const ListPost = () => {
             </div>
           </div>
         ))}
+        <div className='card card-plus m-4 bg-light'>
+          <Link className='btn btn-outline-success' to='/'>
+            <i className='bi bi-plus-circle icon-size'></i>
+          </Link>
+        </div>
       </div>
     </section>
   );

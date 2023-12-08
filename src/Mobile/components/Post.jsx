@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -62,7 +62,9 @@ const Post = () => {
               {/* Otros valores del texto aquí */}
             </div>
             <div className='d-flex justify-content-end me-3'>
-              <p className='btn btn-outline-success'>Participantes</p>
+              <Link className='btn btn-outline-success' to='/'>
+                Participantes
+              </Link>
             </div>
           </div>
         </div>

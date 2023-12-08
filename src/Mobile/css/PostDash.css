@@ -4,6 +4,16 @@
 .card-post {
   width: 32em;
 }
+.card-plus {
+  width: 32em;
+  height: 12.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.icon-size {
+  font-size: 3em;
+}
 .description {
   overflow: hidden;
   white-space: normal;
