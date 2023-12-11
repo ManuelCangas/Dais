@@ -62,7 +62,9 @@ const Post = () => {
               {/* Otros valores del texto aquí */}
             </div>
             <div className='d-flex justify-content-end me-3'>
-              <Link className='btn btn-outline-success' to='/'>
+              <Link
+                className='btn btn-outline-success'
+                to={`/app/view/post/participants/${post.id}`}>
                 Participantes
               </Link>
             </div>

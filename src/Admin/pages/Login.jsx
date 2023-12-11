@@ -3,9 +3,9 @@ import FormLogin from "../components/forms/FormLogin";
 
 function Login() {
   return (
-    <main className='bg-image'>
+    <div className='container-fluid bg-image'>
       <FormLogin />
-    </main>
+    </div>
   );
 }
 

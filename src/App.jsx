@@ -5,6 +5,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { AuthProvider } from "./auth/AuthContext"; // Auth con createContext
+// Componentes
 import Home from "./Home/Pages/Home";
 import Landing from "./Home/Landing";
 import Contacto from "./Home/Pages/Contacto";
@@ -55,7 +56,7 @@ function App() {
             <Route path='/app/form/post/:id' element={<FormPost />} />
             <Route path='/app/view/post/:id' element={<ViewPost />} />
             <Route
-              path='/app/view/post/participants'
+              path='/app/view/post/participants/:id'
               element={<Participants />}
             />
             <Route path='*' element={<Navigate to='/app' replace />} />
