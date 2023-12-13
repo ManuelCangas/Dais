@@ -1,8 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../../auth/AuthContext";
 import "../css/Landing.css";
 
 const Navbar = ({ isLoggedIn }) => {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/admin/login");
+  };
+
   const icon = {
     height: "20px",
     width: "20px",
@@ -28,7 +37,7 @@ const Navbar = ({ isLoggedIn }) => {
         </button>
         <div className='collapse navbar-collapse' id='navbarNav'>
           <ul className='navbar-nav'>
-            {isLoggedIn ? (
+            {isLoggedIn && (
               <>
                 <li className='nav-item'>
                   <Link
@@ -94,14 +103,13 @@ const Navbar = ({ isLoggedIn }) => {
                       <span>Usuario : Admin123</span>
                     </a>
                     <ul className='dropdown-menu bg-success-subtle bg-opacity-25'>
-                      <a className='dropdown-item'>Cuenta</a>
-                      <a className='dropdown-item'>Salir</a>
+                      <button onClick={handleLogout} className='dropdown-item'>
+                        Salir
+                      </button>
                     </ul>
                   </li>
                 </ul>
               </>
-            ) : (
-              <li></li>
             )}
           </ul>
         </div>

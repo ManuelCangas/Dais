@@ -7,7 +7,7 @@ function Admin() {
   const { isLoggedIn } = useAuth();
 
   return (
-    <div className='vh-100 vw-100'>
+    <div>
       <Navbar isLoggedIn={isLoggedIn} />
       <Outlet />
     </div>

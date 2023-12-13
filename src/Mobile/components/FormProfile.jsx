@@ -1,7 +1,7 @@
 import React from "react";
 
 function FormProfile() {
-  return <div>FormProfile</div>;
+  return <div></div>;
 }
 
 export default FormProfile;

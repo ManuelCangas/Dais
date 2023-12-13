@@ -79,7 +79,7 @@ const FormLogin = ({ onLoginSuccess }) => {
             className='btn btn-outline-success btn-block'
             onClick={handleLogin}
             to='/admin/dashboard'>
-            Sign in
+            Log in
           </Link>
         </form>
       </div>

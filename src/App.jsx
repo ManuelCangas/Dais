@@ -26,6 +26,7 @@ import Participants from "./Mobile/components/Participants";
 import FormPost from "./Mobile/pages/FormPost";
 import Profile from "./Mobile/pages/Profile";
 import EditProfile from "./Mobile/pages/EditProfile";
+import CreatePost from "./Mobile/pages//CreatePost";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
             <Route path='/app/register' element={<RegisterUser />} />
             <Route path='/app/feed' element={<FeedUsuario />} />
             <Route path='/app/profile' element={<Profile />} />
+            <Route path='/app/post' element={<CreatePost />} />
             <Route path='/app/form/profile' element={<EditProfile />} />
             <Route path='/app/form/post/:id' element={<FormPost />} />
             <Route path='/app/view/post/:id' element={<ViewPost />} />

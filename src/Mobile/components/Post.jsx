@@ -63,7 +63,12 @@ const Post = () => {
             </div>
             <div className='d-flex justify-content-end me-3'>
               <Link
-                className='btn btn-outline-success'
+                className='btn btn-outline-warning btn-sm me-3'
+                to='/app/feed'>
+                Atras
+              </Link>
+              <Link
+                className='btn btn-outline-success btn-sm'
                 to={`/app/view/post/participants/${post.id}`}>
                 Participantes
               </Link>

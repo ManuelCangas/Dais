@@ -103,7 +103,7 @@ const ListPost = () => {
           </div>
         ))}
         <div className='card card-plus m-4 bg-light'>
-          <Link className='btn btn-outline-success' to='/'>
+          <Link className='btn btn-outline-success' to='/app/post'>
             <i className='bi bi-plus-circle icon-size'></i>
           </Link>
         </div>

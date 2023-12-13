@@ -7,7 +7,7 @@ import { useAuth } from "../../auth/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
-const LoginUsuario = () => {
+const LoginUsuario = ({ onLoginSuccess }) => {
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
 
@@ -38,6 +38,7 @@ const LoginUsuario = () => {
         const token = response.data.token;
         console.log("Inicio de sesión exitoso, Token:", token);
         login(token);
+        onLoginSuccess();
         navigateTo("/app/feed");
         alert("Ingresado correctamente");
       } else {

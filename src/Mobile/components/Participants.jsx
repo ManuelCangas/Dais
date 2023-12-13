@@ -52,55 +52,56 @@ const Participants = () => {
   return (
     <div className='container-fluid bg-image'>
       <h2 className='container pt-4 pb-4'>Participantes</h2>
-      <div>
-        <table className='table table-striped'>
-          <thead>
-            <tr>
-              <th className='text-muted'>#</th>
-              <th className='text-muted'>Nombre de usuario</th>
-              <th className='text-muted'>Apodo de usuario</th>
-              <th className='text-muted'>Imprimir código QR</th>
-            </tr>
-          </thead>
-          <tbody>
-            {participants.map((participante) => (
-              <tr key={participante.id}>
-                <th scope='row'>{participante.id}</th>
-                <th>{participante.nombre}</th>
-                <th>{participante.nickname}</th>
-                <th className='col-2'>
-                  <button
-                    className='btn btn-outline-success bi bi-qr-code'
-                    onClick={() =>
-                      handleSelectParticipant(participante)
-                    }></button>
-                </th>
+      <div className='container row'>
+        <div className='col-9'>
+          <table className='table table-striped'>
+            <thead>
+              <tr>
+                <th className='text-muted'>#</th>
+                <th className='text-muted'>Nombre de usuario</th>
+                <th className='text-muted'>Apodo de usuario</th>
+                <th className='text-muted'>Imprimir código QR</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {selectedParticipant && (
-        <div>
-          <h3>Código QR de {selectedParticipant.nombre}</h3>
-          {qrCode ? (
-            <pre
-              style={{
-                whiteSpace: "pre-wrap",
-                wordWrap: "break-word",
-                lineHeight: "1.2",
-              }}>
-              {qrCode}
-            </pre>
-          ) : (
-            <div className='alert alert-danger'>
-              Error al cargar el código QR.
-            </div>
-          )}
-          <button onClick={handleCloseQR}>Cerrar</button>
+            </thead>
+            <tbody>
+              {participants.map((participante) => (
+                <tr key={participante.id}>
+                  <th scope='row'>{participante.id}</th>
+                  <th>{participante.nombre}</th>
+                  <th>{participante.nickname}</th>
+                  <th className='col-2'>
+                    <button
+                      className='btn btn-outline-success bi bi-qr-code'
+                      onClick={() =>
+                        handleSelectParticipant(participante)
+                      }></button>
+                  </th>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-      )}
+        {selectedParticipant && (
+          <div className='col-3'>
+            <h3>Código QR de {selectedParticipant.nombre}</h3>
+            {qrCode ? (
+              <pre
+                style={{
+                  whiteSpace: "pre-wrap",
+                  wordWrap: "break-word",
+                  lineHeight: "1.2",
+                }}>
+                {qrCode}
+              </pre>
+            ) : (
+              <div className='alert alert-danger'>
+                Error al cargar el código QR.
+              </div>
+            )}
+            <button onClick={handleCloseQR}>Cerrar</button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
