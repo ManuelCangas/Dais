@@ -14,11 +14,21 @@ const Dashadmin = () => {
         const response = await axios.get(URL);
         const usuarios = response.data;
 
-        // Crear un array de nombres de rol y contar cuántos hay
-        const labels = usuarios.map((usuario) =>
-          getRolName(usuario.usuario_rol)
-        );
-        const data = usuarios.map(() => 1);
+        // Agrupar usuarios por rol y contar la cantidad
+        const rolCounts = {
+          Jugador: 0,
+          Tienda: 0,
+          Administrador: 0,
+        };
+
+        usuarios.forEach((usuario) => {
+          const rolName = getRolName(usuario.usuario_rol);
+          rolCounts[rolName]++;
+        });
+
+        // Convertir los resultados en arrays para Chart.js
+        const labels = Object.keys(rolCounts);
+        const data = Object.values(rolCounts);
 
         // Datos de ejemplo
         const chartData = {
@@ -27,8 +37,16 @@ const Dashadmin = () => {
             {
               label: "Usuarios por Rol",
               data: data,
-              backgroundColor: "rgba(75,192,192,0.4)",
-              borderColor: "rgba(75,192,192,1)",
+              backgroundColor: [
+                "rgba(75,192,192,0.4)",
+                "rgba(255,99,132,0.4)",
+                "rgba(54, 162, 235, 0.4)",
+              ],
+              borderColor: [
+                "rgba(75,192,192,1)",
+                "rgba(255,99,132,1)",
+                "rgba(54, 162, 235, 1)",
+              ],
               borderWidth: 1,
             },
           ],
@@ -44,6 +62,12 @@ const Dashadmin = () => {
             y: {
               beginAtZero: true,
               precision: 0,
+            },
+          },
+          plugins: {
+            legend: {
+              display: true,
+              position: "top",
             },
           },
         };
@@ -88,7 +112,7 @@ const Dashadmin = () => {
 
   return (
     <div className='card p-3 m-2'>
-      <canvas id='myChart' width='400' height='200'></canvas>
+      <canvas id='myChart' width='400' height='150'></canvas>
     </div>
   );
 };
