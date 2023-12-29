@@ -8,8 +8,8 @@ import { jwtDecode } from "jwt-decode";
 const URI = "http://localhost:8000/post";
 
 const ListPost = () => {
-  const [posts, setPosts] = useState([]);
   const { token, login } = useAuth();
+  const [posts, setPosts] = useState([]);
 
   const decodedToken = token ? jwtDecode(token) : null;
   const userId = decodedToken ? decodedToken.userId : null;
@@ -19,22 +19,20 @@ const ListPost = () => {
     if (storedToken) {
       login(storedToken); // Si hay un token en localStorage, actualiza el estado con ese token
     }
-    getPost(); // Realiza la lógica para obtener publicaciones
-  }, [login, token, userId]); // [] como segundo argumento significa que se ejecuta solo en el montaje inicial
+    if (token && userId) {
+      getPost();
+    }
+  }, [login, token]); // [] como segundo argumento significa que se ejecuta solo en el montaje inicial
 
   //Listar
   const getPost = async () => {
     try {
-      if (!token || !userId) {
-        console.error("Token o Id de usuario no presente");
-        return;
-      }
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       };
-      const res = await axios.post(`${URI}/userposts`, null, config);
+      const res = await axios.post(`${URI}/tienda`, null, config);
       console.log("Respuesta de API:", res.data);
       setPosts(res.data || []);
     } catch (error) {
@@ -55,57 +53,103 @@ const ListPost = () => {
   //HTML
   return (
     <section className='container-fluid scroll-container'>
-      <div className='d-flex'>
-        {posts.map((post) => (
-          <div key={post.id}>
-            <div className='card card-post m-4 bg-light'>
-              <div className='d-flex'>
-                <div className='col-auto'>
-                  {post.rutaImg && (
-                    <img
-                      className='rounded-2'
-                      src={`http://localhost:8000/Imagenes/${post.rutaImg}`}
-                      alt='Imagen de publicación'
-                      style={{ width: "210px", height: "150px" }}
-                    />
-                  )}
-                </div>
-                <div className='col-3 card-body d-flex flex-column'>
-                  <h5 className='card-title'>{post.titulo}</h5>
-                  <p className='card-text description flex-grow-1'>
-                    {post.description}
-                  </p>
+      <h3 className='text-muted'>Activas</h3>
+      <div>
+        <div className='d-flex'>
+          {posts
+            .filter((post) => post.estado)
+            .map((post) => (
+              <div key={post.id}>
+                <div className='card card-post m-4 bg-light'>
+                  <div className='d-flex'>
+                    <div className='col-auto'>
+                      {post.rutaImg && (
+                        <img
+                          className='rounded-2'
+                          src={`http://localhost:8000/Imagenes/${post.rutaImg}`}
+                          alt='Imagen de publicación'
+                          style={{ width: "210px", height: "150px" }}
+                        />
+                      )}
+                    </div>
+                    <div className='col-3 card-body d-flex flex-column'>
+                      <h5 className='card-title'>{post.titulo}</h5>
+                      <p className='card-text description flex-grow-1'>
+                        {post.description}
+                      </p>
+                    </div>
+                  </div>
+                  <div className='card-footer d-flex'>
+                    <div className='col-9 text-muted '>
+                      {new Date(post.fecha).toLocaleString(Date)}
+                    </div>
+                    <div className='col-3'>
+                      <Link
+                        className='btn btn-outline-warning btn-sm me-2'
+                        to={`/app/form/post/${post.id}`}>
+                        <i className='bi bi-pencil-square'></i>
+                      </Link>
+                      <Link
+                        className='btn btn-outline-danger btn-sm me-2'
+                        onClick={() => deletePost(post.id)}>
+                        <i className='bi bi-calendar-x'></i>
+                      </Link>
+                      <Link
+                        className='btn btn-outline-success btn-sm'
+                        to={`/app/view/post/${post.id}`}>
+                        <i className='bi bi-eye'></i>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className='card-footer d-flex'>
-                <div className='col-9 text-muted '>
-                  {new Date(post.fecha).toLocaleString(Date)}
-                </div>
-                <div className='col-3'>
-                  <Link
-                    className='btn btn-outline-warning btn-sm me-2'
-                    to={`/app/form/post/${post.id}`}>
-                    <i className='bi bi-pencil-square'></i>
-                  </Link>
-                  <Link
-                    className='btn btn-outline-danger btn-sm me-2'
-                    onClick={() => deletePost(post.id)}>
-                    <i className='bi bi-calendar-x'></i>
-                  </Link>
-                  <Link
-                    className='btn btn-outline-success btn-sm'
-                    to={`/app/view/post/${post.id}`}>
-                    <i className='bi bi-eye'></i>
-                  </Link>
-                </div>
-              </div>
-            </div>
+            ))}
+          <div className='card card-plus m-4 bg-light'>
+            <Link className='btn btn-outline-success' to='/app/post'>
+              <i className='bi bi-plus-circle icon-size'></i>
+            </Link>
           </div>
-        ))}
-        <div className='card card-plus m-4 bg-light'>
-          <Link className='btn btn-outline-success' to='/app/post'>
-            <i className='bi bi-plus-circle icon-size'></i>
-          </Link>
+        </div>
+        <h3 className='text-muted'>Finalizadas</h3>
+        <div>
+          {posts
+            .filter((post) => !post.estado) // Filtrar publicaciones finalizadas
+            .map((post) => (
+              <div key={post.id}>
+                <div className='card card-post m-4 bg-light'>
+                  <div className='d-flex'>
+                    <div className='col-auto'>
+                      {post.rutaImg && (
+                        <img
+                          className='rounded-2'
+                          src={`http://localhost:8000/Imagenes/${post.rutaImg}`}
+                          alt='Imagen de publicación'
+                          style={{ width: "210px", height: "150px" }}
+                        />
+                      )}
+                    </div>
+                    <div className='col-3 card-body d-flex flex-column'>
+                      <h5 className='card-title'>{post.titulo}</h5>
+                      <p className='card-text description flex-grow-1'>
+                        {post.description}
+                      </p>
+                    </div>
+                  </div>
+                  <div className='card-footer d-flex'>
+                    <div className='col-9 text-muted '>
+                      {new Date(post.fecha).toLocaleString(Date)}
+                    </div>
+                    <div className='col-3'>
+                      <Link
+                        className='btn btn-outline-success btn-sm ms-5'
+                        to={`/app/view/post/${post.id}`}>
+                        <i className='bi bi-eye'></i>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
         </div>
       </div>
     </section>

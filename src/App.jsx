@@ -5,7 +5,6 @@ import {
   Navigate,
 } from "react-router-dom";
 import { AuthProvider } from "./auth/AuthContext"; // Auth con createContext
-// Componentes
 import Home from "./Home/Pages/Home";
 import Landing from "./Home/Landing";
 import Contacto from "./Home/Pages/Contacto";
@@ -13,20 +12,24 @@ import Nosotros from "./Home/Pages/Nosotros";
 import Admin from "./Admin/Admin";
 import LoginAdmin from "./Admin/pages/Login";
 import Dashboard from "./Admin/pages/Dashboard";
+import RepoUsuarios from "./Admin/components/lists/RepoUsuarios";
 import Usuarios from "./Admin/pages/Usuarios";
 import Posts from "./Admin/pages/Posts";
 import ListarPost from "./Admin/pages/ListarPost";
+import Post from "./Admin/components/lists/Post";
 import FormTag from "./Admin/pages/Tags";
 import Platform from "./mobile/Platform";
 import LoginUsuario from "./Mobile/pages/Login";
 import RegisterUser from "./Mobile/pages/RegisterUser";
 import FeedUsuario from "./Mobile/pages/Feed";
+import Report from "./Mobile/components/Report";
 import ViewPost from "./Mobile/pages/ViewPost";
 import Participants from "./Mobile/components/Participants";
 import FormPost from "./Mobile/pages/FormPost";
 import Profile from "./Mobile/pages/Profile";
 import EditProfile from "./Mobile/pages/EditProfile";
 import CreatePost from "./Mobile/pages//CreatePost";
+import FormSubs from "./Mobile/components/FormSubs";
 
 function App() {
   return (
@@ -42,9 +45,14 @@ function App() {
           <Route path='/admin' element={<Admin />}>
             <Route path='/admin/login' element={<LoginAdmin />} />
             <Route path='/admin/dashboard' element={<Dashboard />} />
+            <Route
+              path='/admin/dashboard/usuarios'
+              element={<RepoUsuarios />}
+            />
             <Route path='/admin/usuarios' element={<Usuarios />} />
             <Route path='/admin/posts' element={<Posts />} />
             <Route path='/admin/posts/listar' element={<ListarPost />} />
+            <Route path='/admin/posts/:id' element={<Post />} />
             <Route path='/admin/tags' element={<FormTag />} />
             <Route path='*' element={<Navigate to='/admin' replace />} />
           </Route>
@@ -52,6 +60,8 @@ function App() {
             <Route path='/app/login' element={<LoginUsuario />} />
             <Route path='/app/register' element={<RegisterUser />} />
             <Route path='/app/feed' element={<FeedUsuario />} />
+            <Route path='/app/report' element={<Report />} />
+            <Route path='/app/subs' element={<FormSubs />} />
             <Route path='/app/profile' element={<Profile />} />
             <Route path='/app/post' element={<CreatePost />} />
             <Route path='/app/form/profile' element={<EditProfile />} />
@@ -61,6 +71,7 @@ function App() {
               path='/app/view/post/participants/:id'
               element={<Participants />}
             />
+
             <Route path='*' element={<Navigate to='/app' replace />} />
           </Route>
         </Routes>

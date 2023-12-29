@@ -70,14 +70,14 @@ const RegisterUser = () => {
               <label className='form-label text-muted'>Correo</label>
               <input
                 className='form-control'
-                type='text'
+                type='password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
               <label className='form-label text-muted'>Contraseña</label>
               <input
                 className='form-control'
-                type='text'
+                type='password'
                 value={repeatPassword}
                 onChange={(e) => setRepeatPassword(e.target.value)}
               />

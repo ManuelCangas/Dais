@@ -2,9 +2,13 @@ import React from "react";
 import FormLogin from "../components/forms/FormLogin";
 
 function Login() {
+  const handleLoginSuccess = () => {
+    console.log("Login exitoso");
+  };
+
   return (
     <div className='container-fluid bg-image'>
-      <FormLogin />
+      <FormLogin onLoginSuccess={handleLoginSuccess} />
     </div>
   );
 }

@@ -5,9 +5,9 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [isLoggedIn, setLoggedIn] = useState(false);
+  const [sharedData, setSharedData] = useState(null);
 
   useEffect(() => {
-    // Verificar si hay un token almacenado
     const storedToken = localStorage.getItem("token");
     if (storedToken) {
       setToken(storedToken);
@@ -27,7 +27,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, token, login, logout }}>
+    <AuthContext.Provider
+      value={{ isLoggedIn, token, login, logout, sharedData, setSharedData }}>
       {children}
     </AuthContext.Provider>
   );

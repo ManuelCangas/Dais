@@ -39,13 +39,13 @@ const FormTag = () => {
           etiqueta: etiqueta, // Asegúrate de que 'etiqueta' sea el nombre correcto del campo
         })
         .then(() => {
-          alert('Etiqueta actualizada correctamente');
+          alert("Etiqueta actualizada correctamente");
           getAllTags();
-          setEtiqueta('');
+          setEtiqueta("");
           setSelectedTag(null);
         })
         .catch((error) => {
-          console.error('Error al actualizar la etiqueta:', error);
+          console.error("Error al actualizar la etiqueta:", error);
         });
     }
   };
@@ -94,9 +94,7 @@ const FormTag = () => {
               onClick={updateTag}>
               Actualizar
             </button>
-            <label className='col-2 mt-1'>
-              Seleccionado : {selectedTag}
-            </label>
+            <label className='col-2 mt-1'>Seleccionado : {selectedTag}</label>
           </div>
         </div>
         <ul className='d-flex flex-wrap'>

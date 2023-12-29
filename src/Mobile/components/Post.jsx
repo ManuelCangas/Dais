@@ -23,6 +23,33 @@ const Post = () => {
     }
   }, [id]);
 
+  const handleFinalizarClick = async () => {
+    const confirmacion = window.confirm(
+      "¿Estás seguro de que deseas marcar esta publicación como finalizada?"
+    );
+    if (confirmacion) {
+      try {
+        // Realizar la solicitud PATCH al servidor para marcar la publicación como finalizada
+        await axios.patch(`${URI}${id}`, {
+          estado: false,
+        });
+
+        // Actualizar el estado local para reflejar el cambio
+        setPost((prevPost) => ({
+          ...prevPost,
+          estado: false,
+        }));
+
+        // Puedes hacer otras cosas después de marcar como finalizada, como recargar la página o actualizar la interfaz de usuario.
+      } catch (error) {
+        console.error(
+          "Error al intentar marcar como finalizada:",
+          error.message
+        );
+      }
+    }
+  };
+
   if (!id || !post) {
     return <div>Loading...</div>;
   }
@@ -50,7 +77,6 @@ const Post = () => {
               <p className='text-muted'>
                 Ubicación de evento: {post.ubication || "No disponible"}
               </p>
-              <p className='text-muted'>N° de participantes: 0</p>
             </div>
           </div>
 
@@ -62,16 +88,38 @@ const Post = () => {
               {/* Otros valores del texto aquí */}
             </div>
             <div className='d-flex justify-content-end me-3'>
-              <Link
-                className='btn btn-outline-warning btn-sm me-3'
-                to='/app/feed'>
-                Atras
-              </Link>
-              <Link
-                className='btn btn-outline-success btn-sm'
-                to={`/app/view/post/participants/${post.id}`}>
-                Participantes
-              </Link>
+              {post.estado ? (
+                <>
+                  <Link
+                    className='btn btn-outline-warning btn-sm me-3'
+                    to='/app/feed'>
+                    Atrás
+                  </Link>
+                  <Link
+                    className='btn btn-outline-success btn-sm me-3'
+                    to={`/app/view/post/participants/${post.id}`}>
+                    Participantes
+                  </Link>
+                  <button
+                    className='btn btn-outline-danger btn-sm'
+                    onClick={handleFinalizarClick}>
+                    Finalizar
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    className='btn btn-outline-warning btn-sm me-3'
+                    to='/app/feed'>
+                    Atrás
+                  </Link>
+                  <Link
+                    className='btn btn-outline-success btn-sm me-3'
+                    to={`/app/view/post/participants/${post.id}`}>
+                    Participantes
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>

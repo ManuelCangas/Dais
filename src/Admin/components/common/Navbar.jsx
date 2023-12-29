@@ -86,7 +86,7 @@ const Navbar = ({ isLoggedIn }) => {
                       </Link>
                     </li>
                     <li>
-                      <Link className='dropdown-item' to='/admin/posts'>
+                      <Link className='dropdown-item' to='/admin/posts/listar'>
                         Publicaciones
                       </Link>
                     </li>
@@ -100,7 +100,7 @@ const Navbar = ({ isLoggedIn }) => {
                       data-bs-toggle='dropdown'
                       aria-expanded='false'>
                       <i className='bi bi-person-circle me-2' style={icon}></i>
-                      <span>Usuario : Admin123</span>
+                      <span>Administrador</span>
                     </a>
                     <ul className='dropdown-menu bg-success-subtle bg-opacity-25'>
                       <button onClick={handleLogout} className='dropdown-item'>

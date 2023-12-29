@@ -28,9 +28,9 @@ const Navbar = ({ isLoggedIn }) => {
                   </Link>
                 </li>
                 <li className='nav-item'>
-                  <a className='nav-link' href='#'>
+                  <Link className='nav-link' to='/app/report'>
                     Reportes
-                  </a>
+                  </Link>
                 </li>
                 <ul className='navbar-nav ms-auto me-2'>
                   <li className='nav-item dropdown'>
@@ -46,7 +46,9 @@ const Navbar = ({ isLoggedIn }) => {
                       <Link className='dropdown-item' to='/app/profile'>
                         Perfil
                       </Link>
-                      <Link className='dropdown-item'>Subscripción</Link>
+                      <Link className='dropdown-item' to='/app/subs'>
+                        Subscripción
+                      </Link>
                       <button onClick={handleLogout} className='dropdown-item'>
                         <i className='bi bi-door-open text-danger'>
                           Cerrar sesión
