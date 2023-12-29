@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import React from "react";
 import axios from "axios";
 import DadoImage from "../css/dado.png";
 import "../css/Login.css";
 import { useAuth } from "../../auth/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+
+const URI = "http://localhost:8000/usuario/login-tienda";
 
 const LoginUsuario = ({ onLoginSuccess }) => {
   const [nickname, setNickname] = useState("");
@@ -27,16 +28,13 @@ const LoginUsuario = ({ onLoginSuccess }) => {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:8000/usuario/logTienda",
-        {
-          nickname: nickname,
-          password: password,
-        }
-      );
+      const response = await axios.post(`${URI}`, {
+        nickname: nickname,
+        password: password,
+      });
       if (response.data && response.data.token) {
         const token = response.data.token;
-        console.log("Inicio de sesión exitoso, Token:", token);
+        console.log("Token:", token);
         login(token);
         onLoginSuccess();
         navigateTo("/app/feed");
@@ -85,12 +83,11 @@ const LoginUsuario = ({ onLoginSuccess }) => {
                 <a href='#!'>Forgot password?</a>
               </div>
             </div>
-            <Link
+            <button
               className='btn btn-outline-success btn-block'
-              onClick={handleLogin}
-              to='/app/feed'>
+              onClick={handleLogin}>
               Log in
-            </Link>
+            </button>
             <Link
               className='btn btn-outline-success btn-block ms-3'
               to='/app/register'>
